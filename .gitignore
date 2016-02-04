@@ -1,0 +1,11 @@
+.gradle/
+.idea/
+obj/
+build/*
+gradle/wrapper/gradle-wrapper.jar
+gradlew
+gradlew.bat
+import-summary.txt
+local.properties
+*.iml
+*.so
