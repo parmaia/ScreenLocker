@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Screen Locker</string>
+    <string name="first_run">Primera ejecución</string>
+    <string name="first_run_text">Esta aplicación necesita permisos de administrador para poder funcionar. Una vez otorgados la aplicación no podrá desinstalarse desde el administrador de aplicaciones. Si quiere desinstalarla, utilice el botón \"Desinstalar\"\n\nQuiere habilitar los permisos de administrador ahora?</string>
+    <string name="enable">Habilitar</string>
+    <string name="not_now">Ahora no</string>
+    <string name="explanation">Screen Locker necesita permisos administrativos para poder bloquear la pantalla. Haga click en Habilitar para comenzar</string>
+    <string name="button_visible">Botón visible</string>
+    <string name="uninstall">Desinstalar</string>
+</resources>

@@ -128,12 +128,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     private void showDialog(){
         AlertDialog.Builder bld = new AlertDialog.Builder(this);
-        bld.setTitle("Primera ejecución");
-        bld.setMessage("Esta aplicación necesita permisos de administrador para poder funcionar. " +
-                "Una vez otorgados la aplicacion no podra desinstalarse desde el administrador " +
-                "de aplicaciones. Si quiere desinstalarla, utilice el boton \"Desinstalar\"\n\n" +
-                "Quiere habilitar los permisos de administrador ahora?");
-        bld.setPositiveButton("Habilitar", new DialogInterface.OnClickListener() {
+        bld.setTitle(R.string.first_run);
+        bld.setMessage(R.string.first_run_text);
+        bld.setPositiveButton(R.string.enable, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -141,7 +138,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 pref.edit().putBoolean("first_time", false).commit();
             }
         });
-        bld.setNegativeButton("Ahora no", new DialogInterface.OnClickListener() {
+        bld.setNegativeButton(R.string.not_now, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -155,7 +152,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
         if(v == lock){
             lock();
         }
@@ -183,7 +179,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         Log.d("Locker", "enable");
         Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
         intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, compName);
-        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Additional text explaining why this needs to be added.");
+        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, getString(R.string.explanation));
         startActivityForResult(intent, RESULT_ENABLE);
     }
 

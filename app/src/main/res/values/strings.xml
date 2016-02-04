@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Screen Locker</string>
+    <string name="first_run">First run</string>
+    <string name="first_run_text">Screen Locker needs administrative permission in order to lock screen. Once granted the app can not be uninstalled from the app admin (in android settings). To uninstall it, use the \"Unisntall\" button.\n\nDo you want to grant administrative permission now?</string>
+    <string name="enable">Enable</string>
+    <string name="not_now">Not now</string>
+    <string name="explanation">Screen Locker needs administrative permission in order to lock screen. Click on Enable to start</string>
+    <string name="button_visible">Button visible</string>
+    <string name="uninstall">Uninstall</string>
 </resources>

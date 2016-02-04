@@ -31,7 +31,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="4dp"
-            android:text="Boton visible"/>
+            android:text="@string/button_visible"/>
         <com.kyleduo.switchbutton.SwitchButton
             android:id="@+id/check"
             android:layout_width="wrap_content"
@@ -92,5 +92,5 @@
         android:textColor="#DDD"
         android:textSize="20sp"
         android:background="@drawable/red_button_background"
-        android:text="Desinstalar"/>
+        android:text="@string/uninstall"/>
 </LinearLayout>
