@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.admin.DevicePolicyManager;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,12 +16,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.TextView;
+
+import com.kyleduo.switchbutton.SwitchButton;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     Intent svcIntent;
     private Button lock;
     private Button disable;
     private Button enable;
+    private SwitchButton switchButton;
+    private TextView showText;
+
     SharedPreferences pref;
     DevicePolicyManager deviceManger;
     ActivityManager activityManager;
@@ -29,7 +37,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences pref = getSharedPreferences("lock_pref", Context.MODE_MULTI_PROCESS);
+        pref = getSharedPreferences("lock_pref", Context.MODE_MULTI_PROCESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         svcIntent = new Intent(this, LockerService.class);
@@ -44,6 +52,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 stopService(svcIntent);
+            }
+        });
+        switchButton = (SwitchButton) findViewById(R.id.check);
+        showText = (TextView) findViewById(R.id.show_button_text);
+        findViewById(R.id.toggle_show).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleState(!switchButton.isChecked());
+                switchButton.toggle();
+            }
+        });
+        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                toggleState(isChecked);
             }
         });
         findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
@@ -62,12 +85,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         activityManager = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
         compName = new ComponentName(this, MyAdmin.class);
 
-//        findViewById(R.id.stopService).postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                enable();
-//            }
-//        }, 1000);
         lock =(Button)findViewById(R.id.lock);
         lock.setOnClickListener(this);
         disable = (Button)findViewById(R.id.disable);
@@ -79,6 +96,26 @@ public class MainActivity extends Activity implements View.OnClickListener {
             showDialog();
         }else{
             startService(svcIntent);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        boolean isAdmin = deviceManger.isAdminActive(compName);
+        if(pref.getBoolean("first_time", true) || !isAdmin){
+            showDialog();
+        }else{
+            startService(svcIntent);
+        }
+    }
+
+    private void toggleState(boolean isChecked) {
+        if(isChecked){
+            startService(svcIntent);
+            //showText.setText("Ocultar");
+        }else{
+            stopService(svcIntent);
+            //showText.setText("Mostrar");
         }
     }
 
@@ -101,7 +138,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 enable();
-                SharedPreferences pref = getSharedPreferences("lock_pref", Context.MODE_MULTI_PROCESS);
                 pref.edit().putBoolean("first_time", false).commit();
             }
         });

@@ -102,7 +102,9 @@ public class LockerService extends Service {
         if (active) {
             deviceManger.lockNow();
         }else{
-            Log.d("Locker", "not active");
+            Intent i = new Intent(this, MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(i);
         }
     }
 
