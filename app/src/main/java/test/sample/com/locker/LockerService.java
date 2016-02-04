@@ -1,5 +1,8 @@
 package test.sample.com.locker;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
@@ -7,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -24,6 +28,7 @@ public class LockerService extends Service {
     private boolean consumeTouch;
     ComponentName compName;
     DevicePolicyManager deviceManger;
+    private NotificationManager notificationManager;
 
     @Override
     public void onCreate() {
@@ -47,6 +52,7 @@ public class LockerService extends Service {
         params.x = 0;
         params.y = 100;
         consumeTouch = false;
+        notificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 
         //this code is for dragging the chat head
         button.setOnTouchListener(new View.OnTouchListener() {
@@ -95,6 +101,7 @@ public class LockerService extends Service {
         });
 
         windowManager.addView(button, params);
+        showServiceNotification();
     }
 
     private void lock(){
@@ -113,10 +120,32 @@ public class LockerService extends Service {
         super.onDestroy();
         if (button != null)
             windowManager.removeView(button);
+        notificationManager.cancel(2233);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
+
+
+    private void showServiceNotification() {
+        CharSequence title = getString(R.string.app_name);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 2233, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setContentIntent(contentIntent)
+                .setContentTitle(title)
+                .setSmallIcon(R.drawable.lock_notification);
+
+        Notification notification = builder.build();
+        notification.flags |= Notification.FLAG_NO_CLEAR;
+
+        notificationManager.notify(2233, notification);
+    }
+
 }
