@@ -55,6 +55,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             }
         });
         switchButton = (SwitchButton) findViewById(R.id.check);
+        switchButton.setChecked(pref.getBoolean("show_button", false));
+
         showText = (TextView) findViewById(R.id.show_button_text);
         findViewById(R.id.toggle_show).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +96,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         boolean isAdmin = deviceManger.isAdminActive(compName);
         if(pref.getBoolean("first_time", true) || !isAdmin){
             showDialog();
-        }else{
-            startService(svcIntent);
         }
     }
 

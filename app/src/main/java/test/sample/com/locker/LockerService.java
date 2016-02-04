@@ -8,6 +8,7 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
@@ -29,14 +30,15 @@ public class LockerService extends Service {
     ComponentName compName;
     DevicePolicyManager deviceManger;
     private NotificationManager notificationManager;
+    private SharedPreferences pref;
 
     @Override
     public void onCreate() {
         super.onCreate();
         compName = new ComponentName(this, MyAdmin.class);
         deviceManger = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        pref = getSharedPreferences("lock_pref", Context.MODE_MULTI_PROCESS);
 
         button = new ImageView(this);
         button.setImageResource(R.drawable.lock_button);
@@ -101,6 +103,7 @@ public class LockerService extends Service {
         });
 
         windowManager.addView(button, params);
+        pref.edit().putBoolean("show_button", true).commit();
         showServiceNotification();
     }
 
@@ -121,6 +124,7 @@ public class LockerService extends Service {
         if (button != null)
             windowManager.removeView(button);
         notificationManager.cancel(2233);
+        pref.edit().putBoolean("show_button", false).commit();
     }
 
     @Override
