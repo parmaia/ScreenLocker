@@ -1,4 +1,4 @@
-package test.sample.com.locker;
+package test.sample.com.screen_locker;
 
 import org.junit.Test;
 

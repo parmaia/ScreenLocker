@@ -1,4 +1,4 @@
-package test.sample.com.locker;
+package com.parmaia.screen_locker;
 
 import android.app.admin.DeviceAdminReceiver;
 import android.content.Context;

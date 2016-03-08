@@ -1,4 +1,4 @@
-package test.sample.com.locker;
+package com.parmaia.screen_locker;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -18,6 +18,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
+import test.sample.com.screen_locker.R;
 
 /**
  * Created by Rubèn on 1/02/16.

@@ -1,11 +1,10 @@
-package test.sample.com.locker;
+package com.parmaia.screen_locker;
 
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.admin.DevicePolicyManager;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +19,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.kyleduo.switchbutton.SwitchButton;
+
+import test.sample.com.screen_locker.R;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     Intent svcIntent;
